@@ -17,6 +17,9 @@ from django.contrib.auth.decorators import login_required
 # ]
 
 def login_page(request):
+
+    page = 'login'
+
     if request.user.is_authenticated:
         messages.success(request, 'You are already logged in')
         return redirect('home')
@@ -38,13 +41,18 @@ def login_page(request):
         else:
             messages.error(request, 'Username or password is wrong')
 
-    context = {}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+def register_page(request):
+    page = 'register'
+    return render(request, 'base/login_register.html')
 
 
 def home(request):
@@ -90,7 +98,7 @@ def update_room(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomFrom(instance=room)
 
-    if request.user != room.host:
+    if request.user != room.host and not request.user.is_superuser:
         return HttpResponseForbidden('You are not allowed to do this.')
 
     if request.method == 'POST':
@@ -107,7 +115,7 @@ def update_room(request, pk):
 def delete_room(request, pk):
     room = Room.objects.get(id=pk)
 
-    if request.user != room.host:
+    if request.user != room.host and not request.user.is_superuser:
         return HttpResponseForbidden('You are not allowed to do this.')
 
     if request.method == 'POST':

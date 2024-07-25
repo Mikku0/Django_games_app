@@ -25,6 +25,8 @@
         <input type="text" name="q" placeholder="search rooms"/>
     </form>
 
+    <hr>
+
     {% if request.user.is_authenticated %}
         <div class="user-info">
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>

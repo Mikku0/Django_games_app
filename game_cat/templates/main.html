@@ -7,21 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>game_cat</title>
 </head>
-<body>
-    {% include 'navbar.html' %}
+<body background="blue">
+{% include 'navbar.html' %}
 
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
         <li>{{ message }}</li>
-        {% endfor %}
+    {% endfor %}
 
-    </ul>
-    {% endif %}
-    {% block content %}
+</ul>
+{% endif %}
+{% block content %}
 
 
-    {% endblock %}
+{% endblock %}
 </body>
 </html>

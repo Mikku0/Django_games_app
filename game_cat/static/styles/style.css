@@ -11,7 +11,7 @@
   --color-light-gray: #b2bdbd;
   --color-bg: #2d2d39;
   --color-success: #5dd693;
-  --color-error: #fc4b0b;
+  --color-error: #c62828;
 }
 
 /*========== base styles ==========*/
@@ -97,6 +97,12 @@ a {
 .btn--main {
   background-color: var(--color-main);
   color: var(--color-dark);
+}
+
+.btn--error {
+  background-color: var(--color-error);
+  color: var(--color-light);
+  float: right;
 }
 
 .btn:hover {
@@ -481,6 +487,10 @@ a {
 .form__group {
   margin-bottom: 2rem;
   width: 100%;
+}
+
+.form__group p {
+  font-size: 24px;
 }
 
 .form__split {

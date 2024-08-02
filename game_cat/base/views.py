@@ -28,7 +28,6 @@ def login_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-
         try:
             user = User.objects.get(username=username)
         except:
@@ -167,7 +166,13 @@ def delete_room(request, pk):
     if request.method == 'POST':
         room.delete()
         return redirect('home')
-    return render(request, 'base/delete.html', {'obj': room})
+
+
+    context = {
+        'obj': room,
+        'obj_type': type(room).__name__.lower()
+    }
+    return render(request, 'base/delete.html', context)
 
 
 @login_required(login_url='login')
@@ -179,8 +184,13 @@ def delete_message(request, pk):
 
     if request.method == 'POST':
         message.delete()
-        return redirect('home') # dodać room/id zamiast home
-    return render(request, 'base/delete.html', {'obj': message})
+        return redirect('home')  # dodać room/id zamiast home
+
+    context = {
+        'obj': message,
+        'obj_type': type(message).__name__.lower()
+    }
+    return render(request, 'base/delete.html', context)
 
 
 @login_required(login_url='login')

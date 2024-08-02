@@ -119,12 +119,10 @@
             </div>
             <div class="room__message">
                 {% if request.user.is_authenticated %}
-                <div class="comment-form">
-                    <form method="POST" action="">
-                        {% csrf_token %}
-                        <input type="text" name="body" placeholder="Write your message here">
-                    </form>
-                </div>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="text" name="body" placeholder="Write your message here">
+                </form>
                 {% endif %}
             </div>
         </div>

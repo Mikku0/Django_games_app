@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from .models import Room, Topic, Message
 from .forms import RoomFrom, UserForm
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -79,7 +79,7 @@ def home(request):
         Q(description__icontains=q)
     )
 
-    topics = Topic.objects.all()
+    topics = Topic.objects.annotate(room_count=Count('room')).order_by('-room_count')[:5]
     room_count = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
 
@@ -205,3 +205,19 @@ def update_user(request):
             return redirect('user-profile', pk=user.id)
 
     return render(request, 'base/update-user.html', {'form': form})
+
+
+def topics_page(request):
+    if request.GET.get('q') is not None:
+        q = request.GET.get('q')
+    else:
+        q = ''
+    topics_filtered = Topic.objects.filter(name__icontains=q)
+    topics = topics_filtered.annotate(room_count=Count('room')).order_by('-room_count')
+
+    return render(request, 'base/topics.html', {'topics': topics})
+
+
+def activity_page(request):
+    room_messages = Message.objects.all()
+    return render(request, 'base/activity.html', {'room_messages': room_messages})

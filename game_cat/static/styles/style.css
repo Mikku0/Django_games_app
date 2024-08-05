@@ -1187,3 +1187,69 @@ video {
   width: auto;
   transform:translateX(250%);
 }
+
+/* copy of topics__list */
+
+
+.topics__list__transition {
+  list-style: none;
+}
+
+.topics__list__transition li a {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  font-weight: 500;
+  color: var(--color-light-gray);
+  transition: all 0.3s ease-in-out;
+}
+
+.topics__list__transition li a.active,
+.topics__list__transition li a:hover {
+  color: var(--color-main);
+}
+
+.topics__list__transition li a span {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-dark);
+  border-radius: 3px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.topics-page a:hover {
+  text-decoration: underline;
+}
+
+.topics-page .topics__list__transition li:not(:last-child) a {
+  margin: 2rem 0;
+  padding-bottom: 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-dark-medium);
+}
+
+/* transition */
+
+.topics__list__transition {
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+    max-height: 1000px;
+    opacity: 1;
+    transition: max-height 0.7s ease, opacity 0.7s ease;
+}
+
+.topics__list__transition.hide {
+    max-height: 0;
+    opacity: 1;
+}
+
+.topics__list__transition .topic-item-transition {
+    display: block;
+}
+
+.topics__list__transition .topic-item-transition {
+    opacity: 1;
+}
+

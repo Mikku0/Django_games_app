@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <div class="background">
-        <h1>Rooms</h1>
+    <div class="background">                
+        <h1>Rooms</h1>        
         <form id="myForm">
             <label for="myInput" class="sr-only"></label>
             <div class="search-container">
@@ -21,20 +21,28 @@
 
         <div id="rooms-container" class="glass-container">
         </div>
+        <img src="astro_cat.gif" alt="cat :)" class="cat">
 
         <script>
             let roomsContainer = document.getElementById('rooms-container');
+            
 
             const generateRooms = (room, input) => {
                 let truncatedDescription = room.description.length > 50 ? room.description.slice(0, 50) + '...' : room.description;
+                let participantsCount = room.participants.length;
                                 
                 let roomLink = `http://127.0.0.1:8000/room/${room.id}`;
 
                 return `<a href="${roomLink}" class="glass">
                         <h2>${room.name}</h2>
-                        <h4>${truncatedDescription}</h4>
-                        <h4>${room.participants}</h4>
-                    </a>`;
+                        <hr>
+                        <h4>id: ${room.id}</h4>
+                        <hr>
+                        <h4>description: ${truncatedDescription}</h4>
+                        <hr>
+                        <h4>participants: ${participantsCount}</h4>
+                    </a>`
+                    ;
             };
 
             const displayError = (message) => {

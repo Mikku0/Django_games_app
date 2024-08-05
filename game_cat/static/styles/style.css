@@ -1173,3 +1173,17 @@ a {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
+
+.video-container {
+  position: fixed;
+  top: 10%;
+  right 0;
+  width: auto;
+  height: 90vh;
+}
+
+video {
+  height: 100%;
+  width: auto;
+  transform:translateX(250%);
+}

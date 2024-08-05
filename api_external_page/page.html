@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona Przykładowa</title>
+    <link rel="stylesheet" href="DarkMatter.theme.css">
+</head>
+
+<body>
+    <div class="background">
+        <h1>Rooms</h1>
+        <form id="myForm">
+            <label for="myInput" class="sr-only"></label>
+            <div class="search-container">
+                <input type="text" id="myInput" name="myInput" placeholder="Room Id" class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </div>
+        </form>
+
+        <div id="rooms-container" class="glass-container">
+        </div>
+
+        <script>
+            let roomsContainer = document.getElementById('rooms-container');
+
+            const generateRooms = (room, input) => {
+                let truncatedDescription = room.description.length > 50 ? room.description.slice(0, 50) + '...' : room.description;
+                                
+                let roomLink = `http://127.0.0.1:8000/room/${room.id}`;
+
+                return `<a href="${roomLink}" class="glass">
+                        <h2>${room.name}</h2>
+                        <h4>${truncatedDescription}</h4>
+                        <h4>${room.participants}</h4>
+                    </a>`;
+            };
+
+            const displayError = (message) => {
+                roomsContainer.innerHTML = `<div class="error">${message}</div>`;
+            };
+
+            let getRooms = async () => {
+                let input = document.getElementById('myInput').value;
+                let url = 'http://127.0.0.1:8000/api/rooms/' + encodeURIComponent(input);
+
+                try {
+                    let response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error('Room with id ' + input + ' does not exist');
+                    }
+                    let rooms = await response.json();
+
+                    if (Array.isArray(rooms)) {
+                        roomsContainer.innerHTML = rooms.map(room => generateRooms(room, input)).join('');
+                    } else {
+                        roomsContainer.innerHTML = generateRooms(rooms, input);
+                    }
+                } catch (error) {
+                    displayError(error.message);
+                }
+            };
+
+            document.getElementById('myForm').addEventListener('submit', (event) => {
+                event.preventDefault();
+                getRooms();
+            });
+
+            getRooms();
+        </script>
+    </div>
+</body>
+
+</html>

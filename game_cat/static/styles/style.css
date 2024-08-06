@@ -3,13 +3,13 @@
 :root {
   --color-main: #71c6dd;
   --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
+  --color-dark: #000000;
+  --color-dark-medium: #51546e;  
   --color-dark-light: #696d97;
   --color-light: #e5e5e5;
   --color-gray: #8b8b8b;
   --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
+  --color-bg: #202029;
   --color-success: #5dd693;
   --color-error: #c62828;
 }
@@ -22,8 +22,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  /* color: inherit; */
+  text-rendering: optimizeLegibility;  
   font-size: inherit;
 }
 
@@ -48,10 +47,27 @@ body {
   font-weight: 400;
   font-size: 1.5rem;
   color: var(--color-light-gray);
-  background-color: var(--color-bg);
   min-height: 100vh;
+  /* Animowany gradient */
+  background: linear-gradient(45deg, #000000,#000000, #5f049b,#9223b4,#000000, #370b55);
+  background-size: 200% 200%;
+  animation: gradientAnimation 50s ease infinite;
 }
 
+/* Kluczowe ramki animacji dla gradientu */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
 img {
   width: 100%;
 }
@@ -377,7 +393,7 @@ a {
 .header__menu svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-dark-light);
+  fill: var(--color-main);
 }
 
 .dropdown-button {
@@ -468,7 +484,12 @@ a {
 .layout__body {
   margin: 3rem;
 }
+.topics {
+        border: 1px solid var(--color-main); /* Kolor i grubość ramki */
+        padding: 20px; /* Odstępy wewnętrzne */
+        border-radius: 8px; /* Zaokrąglenie rogów */
 
+    }
 @media screen and (max-width: 900px) {
   .activities,
   .topics {
@@ -573,7 +594,7 @@ a {
 .topics__header h2 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-dark-light);
+  color: var(--color-main);
 }
 
 .topics__list {
@@ -645,7 +666,7 @@ a {
 
 .roomList__header p {
   font-weight: 500;
-  color: var(--color-dark-light);
+  color: var(--color-main);
 }
 
 /*========== Room List Room ==========*/
@@ -892,7 +913,7 @@ a {
 
 .profile__about h3 {
   text-transform: uppercase;
-  color: var(--color-dark-light);
+  color: var(--color-main);
   margin-bottom: 0.5rem;
 }
 
@@ -901,7 +922,7 @@ a {
 }
 
 .profile-page .roomList__header h2 {
-  color: var(--color-dark-light);
+  color: var(--color-main);
 }
 
 /*==============================
@@ -1062,9 +1083,9 @@ a {
   font-weight: 500;
   color: var(--color-gray);
 }
-
 .threads {
   background: var(--color-bg);
+  border: 1px solid #fff;
   border-radius: 0.7rem;
   overflow-y: auto;
   height: 100%;
@@ -1177,7 +1198,7 @@ a {
 .video-container {
   position: fixed;
   top: 10%;
-  right 0;
+  right: 0;
   width: auto;
   height: 90vh;
 }

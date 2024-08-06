@@ -76,6 +76,8 @@
 
 ## 🔜 To be done
 
+- **Docker**: Set up Docker.
+
 - **Extend API**: Add more objects such as participants and messages.
   
 - **Upvoting System**: Implement an upvoting system for messages and rooms.
@@ -84,6 +86,6 @@
   
 - **Message Search**: Add a search bar to filter messages by text.
 
-- **Responding**: Implement a responding to messages system in rooms
+- **Responding**: Implement a responding to messages system in rooms.
 
 - **Analytics**: Add simple statistics about number of written messages and displaying top users on home page

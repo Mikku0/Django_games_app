@@ -1237,6 +1237,8 @@ video {
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 1px;
+  display: flex;
+   align-items: center;
 }
 
 .topics-page a:hover {
@@ -1274,3 +1276,33 @@ video {
     opacity: 1;
 }
 
+/* messages */
+
+.messages {
+    text-align: center;
+    transition: opacity 0.5s ease-out;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.alert-error {
+    background-color: #f44336;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}
+
+.alert-info {
+    background-color: #2196F3;
+}
+
+.alert-warning {
+    background-color: #ff9800;
+}

@@ -1,21 +1,12 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
-from .models import Room, Topic, Message
-from .forms import RoomFrom, UserForm
+from .models import Room, Topic, Message, User
+from .forms import RoomFrom, UserForm, MyUserCreationForm
 from django.db.models import Q, Count
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-
-# rooms = [
-#     {'id': 1, 'name': 'Adam'},
-#     {'id': 2, 'name': 'Adam2'},
-#     {'id': 3, 'name': 'Adam3'},
-#     {'id': 4, 'name': 'Adam4'},
-# ]
 
 def login_page(request):
     page = 'login'
@@ -25,21 +16,21 @@ def login_page(request):
         return redirect('home')
 
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
         except:
             messages.error(request, 'User does not exist')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username or password is wrong')
+            messages.error(request, 'Email or password is wrong')
 
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
@@ -51,10 +42,10 @@ def logout_user(request):
 
 
 def register_page(request):
-    form = UserCreationForm()
+    form = MyUserCreationForm()
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
@@ -164,9 +155,14 @@ def delete_room(request, pk):
         return HttpResponseForbidden('You are not allowed to do this.')
 
     if request.method == 'POST':
+        topic = room.topic
         room.delete()
-        return redirect('home')
 
+        if not Room.objects.filter(topic=topic).exists():
+            topic.delete()
+            return redirect('home')
+        else:
+            return redirect('home')
 
     context = {
         'obj': room,
@@ -196,13 +192,17 @@ def delete_message(request, pk):
 @login_required(login_url='login')
 def update_user(request):
     user = request.user
+    username = request.user.username
     form = UserForm(instance=user)
 
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+        form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)
+        else:
+            request.user.username = username
+            messages.error(request, 'invalid data')
 
     return render(request, 'base/update-user.html', {'form': form})
 
